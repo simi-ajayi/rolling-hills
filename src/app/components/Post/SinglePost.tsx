@@ -108,7 +108,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ post }) => {
                 className="relative text-[1.2rem] flex items-center text-neutral-500 hover:text-amber-500 cursor-pointer gap-1  ease-in-out duration-200"
                 onClick={() => handleLikePost(post?._id)}
                 onAnimationEnd={() => setWobble(0)}
-                wobble={wobble}
+                // wobble={wobble}
               >
                 <TbStarFilled
                   id="star"

@@ -25,7 +25,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     mutationFn: commentOnPost,
     onSuccess: (data: any) => {
       if (data.success) {
-        queryClient.refetchQueries("Post");
+        queryClient.refetchQueries("Single-Post");
       }
     },
   });

@@ -3,7 +3,12 @@ import { useProfile } from "@/app/states/profile";
 import { Menu, MenuItem } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { BiHeart, BiSolidHeart } from "react-icons/bi";
+import {
+  BiBookmark,
+  BiHeart,
+  BiSolidBookmark,
+  BiSolidHeart,
+} from "react-icons/bi";
 
 type WishbuttonProps = {};
 
@@ -36,9 +41,9 @@ const Wishbutton: React.FC<WishbuttonProps> = () => {
         onClick={handleClick}
       >
         {pathname === "/saved" ? (
-          <BiSolidHeart className=" text-rose-600" size={26} />
+          <BiSolidBookmark className=" text-rose-600" size={26} />
         ) : (
-          <BiHeart size={26} />
+          <BiBookmark size={26} />
         )}
       </button>
       <Menu
@@ -58,7 +63,7 @@ const Wishbutton: React.FC<WishbuttonProps> = () => {
       >
         <MenuItem>
           <div className=" flex flex-col items-center gap-3">
-            <BiSolidHeart className=" text-rose-600 " size={22} />
+            <BiSolidHeart className=" text-blue-600 " size={22} />
             <p className="text-center">
               Collect the products you love from <br /> Shopping articles, and
               we&apos;ll save <br /> them here for you.

@@ -4,7 +4,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IoIosPerson } from "react-icons/io";
 import { GoCommentDiscussion } from "react-icons/go";
-import { PiStar, PiStarFill, PiHeart, PiHeartFill } from "react-icons/pi";
+import {
+  PiStar,
+  PiStarFill,
+  PiHeart,
+  PiHeartFill,
+  PiBookmark,
+  PiBookmarkFill,
+} from "react-icons/pi";
 import { TbStarFilled, TbStar } from "react-icons/tb";
 import "react-quill/dist/quill.bubble.css";
 import { useProfile } from "@/app/states/profile";
@@ -92,7 +99,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ post }) => {
             {post?.author?.username.substring(0, 1)}
           </div>
           <div className=" leading-6">
-            <p className=" text-neutral-700 capitalize text-[14px] font-medium">
+            <p className=" text-theme-tertiary capitalize text-[14px] font-medium">
               {post?.author?.username}
             </p>
             <p className=" text-neutral-600 capitalize text-[14px] -mt-1">
@@ -105,21 +112,21 @@ const SinglePost: React.FC<SinglePostProps> = ({ post }) => {
             <Tooltip title="Like">
               <div
                 id="like"
-                className="relative text-[1.2rem] flex items-center text-neutral-500 hover:text-amber-500 cursor-pointer gap-1  ease-in-out duration-200"
+                className="relative text-[1.2rem] flex items-center text-neutral-500 hover:text-rose-500 cursor-pointer gap-1  ease-in-out duration-200"
                 onClick={() => handleLikePost(post?._id)}
                 onAnimationEnd={() => setWobble(0)}
                 // wobble={wobble}
               >
-                <TbStarFilled
+                <PiHeartFill
                   id="star"
-                  className=" text-amber-300 absolute z-[-1] opacity-0 "
+                  className=" text-rose-400 absolute z-[-1] opacity-0 "
                   wobble={wobble}
                   size={22}
                 />
                 {!!post?.likes.find((like) => like === id) ? (
-                  <TbStarFilled className=" text-amber-500" size={22} />
+                  <PiHeartFill className=" text-rose-500" size={22} />
                 ) : (
-                  <TbStar size={22} />
+                  <PiHeart size={22} />
                 )}
                 {isLoading ? (
                   <>
@@ -146,9 +153,9 @@ const SinglePost: React.FC<SinglePostProps> = ({ post }) => {
                 onClick={() => handleSavePost(post?._id)}
               >
                 {!!profile?.savedPost.find((save) => save === post?._id) ? (
-                  <PiHeartFill className=" text-rose-600" size={22} />
+                  <PiBookmarkFill className=" text-blue-600" size={24} />
                 ) : (
-                  <PiHeart size={22} />
+                  <PiBookmark size={24} />
                 )}
               </div>
             </Tooltip>

@@ -97,3 +97,15 @@ body{
   100% { transform: translateY(-17px); opacity: .1; scale: .6;}
   
 }
+
+/* .hero-carousel {
+  @apply relative h-screen w-full sm:mx-auto;
+} 
+
+.carousel{
+  @apply h-screen w-full relative
+}
+
+.carousel .control-dots .dot {
+  @apply  bg-transparent !important;
+} */

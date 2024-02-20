@@ -14,11 +14,11 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
           {comment?.user?.username?.substring(0, 1)}
         </div>
         <div className=" leading-6">
-          <p className="  capitalize text-[14px] font-medium">
+          <p className="  capitalize text-[14px] font-medium text-theme-tertiary">
             {comment?.user?.username}
           </p>
-          <p className=" text-neutral-600 capitalize text-[14px] -mt-1">
-            {moment(comment?.createdAt).toNow()}
+          <p className=" text-neutral-600 text-[14px] -mt-1">
+            {moment(comment?.createdAt).fromNow()}
           </p>
         </div>
       </div>

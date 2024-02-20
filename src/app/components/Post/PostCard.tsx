@@ -52,9 +52,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish }) => {
       <div className=" flex flex-col gap-[0.34rem] md:col-span-3 col-span-2  w-full ">
         <div className="flex  flex-col gap-1">
           <div className="flex flex-wrap sm:gap-2 gap-1 items-center">
-            <p className="rounded-full font-semibold  text-neutral-600  text-xs">
-              {post?.category}
-            </p>
+            <p className="rounded-full  text-xs">{post?.category}</p>
             <GoDotFill className=" text-gray-600 text-[.5rem]" />
             <p className=" text-xs text-neutral-600">
               {moment(post?.createdAt).fromNow()}
@@ -82,7 +80,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish }) => {
         </div>
 
         <p className=" text-neutral-700 text-xs tracking-wide md:block hidden">
-          by <span className=" capitalize">{post?.author?.username}</span>
+          written by{" "}
+          <span className=" capitalize">{post?.author?.username}</span>
         </p>
 
         {publish && (

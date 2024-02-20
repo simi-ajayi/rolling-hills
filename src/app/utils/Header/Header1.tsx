@@ -17,6 +17,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Image from "next/image";
 import Logo from "../Logo";
 import { categories } from "@/app/components/Post/PostLayout";
+import { FcIdea } from "react-icons/fc";
+import Tips from "@/app/components/modal/Tips";
 
 type Header1Props = {};
 
@@ -24,7 +26,7 @@ const Header1: React.FC<Header1Props> = () => {
   const { isOpen, setClose, setOpen } = useAuthModal();
   const { isAuthenticated, logoutUser } = useProfile();
   const { isLoading, profile } = useProfileData();
-
+  const [openTip, setOpenTip] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [search, setSearch] = useState("");
   const [type, setType] = useState("signup");
@@ -60,6 +62,7 @@ const Header1: React.FC<Header1Props> = () => {
 
   return (
     <>
+      <Tips isOpen={openTip} setClose={() => setOpenTip(false)} />
       <Auth open={isOpen} setClose={setClose} setType={setType} type={type} />
       <div className="w-full min-h-[80px] border flex items-center justify-center fixed top-0 left-0 right-0 z-40 bg-white overflow-x-hidden">
         <div className="lg:w-[80%]  w-[90%] flex items-center justify-between">
@@ -68,36 +71,22 @@ const Header1: React.FC<Header1Props> = () => {
             <Link href={"/"}>
               <Logo />
             </Link>
-
-            <ul className="hidden items-center sm:gap-4 min-[1300px]:flex ml-6">
-              {categories
-                .sort()
-                ?.slice(0, 5)
-                .map((category, index) => (
-                  <li
-                    // onClick={() => categoryNavigation(category)}
-                    className=" font-semibold cursor-pointer"
-                    key={index}
-                  >
-                    <Link
-                      href={`/blogs?category=${category.replace(" ", "+")}`}
-                    >
-                      {category}
-                    </Link>
-                  </li>
-                ))}
-            </ul>
           </div>
 
           <div>
             <ul className="flex items-center justify-evenly gap-5">
+              <li className="flex items-center justify-center">
+                <button onClick={() => setIsSearching((prev) => !prev)}>
+                  <BiSearch size={24} />
+                </button>
+              </li>
               <li className=" hover:underline cursor-pointer  hidden md:block">
                 <Wishbutton />
               </li>
               {!isAuthenticated ? (
                 <>
                   <li
-                    className=" hover:text-theme-primary font-semibold cursor-pointer "
+                    className=" text-white px-3 py-2 text-center bg-theme-tertiary hover:bg-theme-primary rounded-md cursor-pointer "
                     onClick={() => {
                       setOpen();
                       setType("login");
@@ -145,11 +134,6 @@ const Header1: React.FC<Header1Props> = () => {
                   </form>
                 </li>
               )}
-              <li className="flex items-center justify-center">
-                <button onClick={() => setIsSearching((prev) => !prev)}>
-                  <BiSearch size={24} />
-                </button>
-              </li>
 
               <Menu
                 id="basic-menu"
@@ -198,6 +182,21 @@ const Header1: React.FC<Header1Props> = () => {
                       }}
                     >
                       My Post
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        setOpenTip(true);
+                      }}
+                      sx={{
+                        ":hover": {
+                          bgcolor: "#03045e",
+                          color: "#fff",
+                          borderRadius: "3px",
+                        },
+                      }}
+                    >
+                      New Tips <FcIdea className="ml-1" />
                     </MenuItem>
                   </>
                 ) : null}

@@ -15,7 +15,7 @@ const Logo = ({ direction = "row" }: { direction?: "row" | "col" }) => {
         width={60}
       />
       <p className={direction === "col" ? "-mt-7 " : "max-sm:-mt-7"}>
-        Rolling<span className=" text-rose-600">Hills</span>
+        Rolling<span className=" text-emerald-600">Hills</span>
       </p>
     </div>
   );

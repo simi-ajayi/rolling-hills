@@ -42,6 +42,14 @@ export const getOwnerPost = async () => {
     return error?.response?.data;
   }
 };
+export const getTrendingPost = async () => {
+  try {
+    const res = await axios.get(`${url}/trending`, { headers });
+    return res.data;
+  } catch (error: any) {
+    return error?.response?.data;
+  }
+};
 
 export const createPost = async (data: any) => {
   try {

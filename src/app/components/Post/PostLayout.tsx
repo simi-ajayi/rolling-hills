@@ -5,6 +5,8 @@ import MostRecentPost from "./MostRecentPost";
 import Empty from "@/app/utils/Empty";
 
 import DoYouKnow from "./DoYouKnow";
+import TrendingPost from "./TrendingPost";
+import LatestPost from "./LatestPost";
 
 type PostLayoutProps = {
   posts: Post[] | undefined;
@@ -54,12 +56,21 @@ const PostLayout: React.FC<PostLayoutProps> = ({
   }
   return (
     <div className="w-full max-md:gap-[4rem] gap-[2rem]  min-h-[60vh] flex flex-col-reverse lg:flex-row mb-[2rem] ">
-      <div className=" flex-[1.2] border-r-gray-100 lg:border-r lg:pr-[3rem] flex flex-col gap-10">
+      <div className=" w-full flex-[1.2] border-r-gray-100 lg:border-r lg:pr-[3rem] flex flex-col gap-[5rem]">
         {recentPost && <MostRecentPost />}
+
+        <div className=" lg:hidden flex w-full">
+          <TrendingPost />
+        </div>
+        <LatestPost posts={posts} />
+        <div className=" lg:hidden flex w-full">
+          <DoYouKnow />
+        </div>
 
         <div className="w-full z-10">{content}</div>
       </div>
-      <div className="flex backdrop-blur-md flex-col gap-4 flex-[.4] w-full mt-5 ">
+      <div className="lg:flex backdrop-blur-md flex-col gap-[4rem] flex-[.7] w-full hidden  ">
+        <TrendingPost />
         <DoYouKnow />
       </div>
     </div>

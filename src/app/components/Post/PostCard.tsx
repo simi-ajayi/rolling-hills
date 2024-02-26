@@ -1,23 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
-import { IoIosPerson } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
 import moment from "moment";
 import React from "react";
 import { LiaEdit } from "react-icons/lia";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useProfile } from "@/app/states/profile";
 import Image from "next/image";
-import QuillViewer from "../Quill/QuillViewer";
+import useProfileData from "@/hooks/useProfileData";
 
 type PostCardProps = {
   post: Post;
   publish?: boolean;
+  trending?: boolean;
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post, publish }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
   const navigate = useRouter();
-  const { id } = useProfile();
+  const { profile } = useProfileData();
 
   const handleRouteToEdit = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -28,10 +27,10 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish }) => {
   //   navigate.push(`/blogs/${post?._id}`);
   // };
   return (
-    <div className="w-full grid md:grid-cols-4 grid-cols-3  justify-between gap-5">
+    <div className="w-full grid md:grid-cols-5 grid-cols-4  justify-between gap-5">
       <Link
         href={`/blogs/${post?._id}`}
-        className=" col-span-1 md:h-[8.5rem] sm:h-[7rem] h-[6rem]"
+        className=" col-span-2 md:h-[8.5rem] sm:h-[7rem] h-[6rem]"
       >
         {post?.photo ? (
           <Image
@@ -51,22 +50,24 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish }) => {
       </Link>
       <div className=" flex flex-col gap-[0.34rem] md:col-span-3 col-span-2  w-full ">
         <div className="flex  flex-col gap-1">
-          <div className="flex flex-wrap sm:gap-2 gap-1 items-center">
-            <p className="rounded-full  text-xs">{post?.category}</p>
-            <GoDotFill className=" text-gray-600 text-[.5rem]" />
-            <p className=" text-xs text-neutral-600">
-              {moment(post?.createdAt).fromNow()}
-            </p>
+          {!trending && (
+            <div className="flex flex-wrap sm:gap-2 gap-1 items-center">
+              <p className="rounded-full  text-xs">{post?.category}</p>
+              <GoDotFill className=" text-gray-600 text-[.5rem]" />
+              <p className=" text-xs text-neutral-600">
+                {moment(post?.createdAt).fromNow()}
+              </p>
 
-            {id === post?.author._id && (
-              <div
-                onClick={(e) => handleRouteToEdit(e)}
-                className=" cursor-pointer hover:text-theme-tertiary bg-zinc-300 flex justify-center items-center p-1 rounded-full"
-              >
-                <LiaEdit className="text-[1.2rem]" />
-              </div>
-            )}
-          </div>
+              {profile?._id === post?.author._id && (
+                <div
+                  onClick={(e) => handleRouteToEdit(e)}
+                  className=" cursor-pointer hover:text-theme-tertiary bg-zinc-300 flex justify-center items-center p-1 rounded-full"
+                >
+                  <LiaEdit className="text-[1.2rem]" />
+                </div>
+              )}
+            </div>
+          )}
           <Link
             href={`/blogs/${post?._id}`}
             className=" md:text-[1.6rem] text-[1rem] font-bold tracking-tight  hover:text-blue-600"
@@ -79,10 +80,12 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish }) => {
           </p> */}
         </div>
 
-        <p className=" text-neutral-700 text-xs tracking-wide md:block hidden">
-          written by{" "}
-          <span className=" capitalize">{post?.author?.username}</span>
-        </p>
+        {!trending && (
+          <p className=" text-neutral-700 text-xs tracking-wide md:block hidden">
+            written by{" "}
+            <span className=" capitalize">{post?.author?.username}</span>
+          </p>
+        )}
 
         {publish && (
           <>

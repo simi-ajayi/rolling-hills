@@ -20,20 +20,20 @@ const MostRecentPost: React.FC<MostRecentPostProps> = () => {
     return <TopPostLoader />;
   }
   return (
-    <div className="hero-carousel z-10">
+    <div className="hero-carousel z-10 relative">
       <div className="lg:h-[70%] z-[-10] h-[60%] w-[50%]  absolute lg:bottom-12  -left-1/4 bg-transparent bg-[radial-gradient(#03055e2c_1px,#fff_1px)] bg-[size:20px_20px]"></div>
 
       <Carousel
         showThumbs={false}
         autoPlay
         infiniteLoop
-        interval={20000}
+        interval={15000}
         showArrows={false}
         showIndicators={false}
         showStatus={false}
       >
         {posts?.map((post) => (
-          <div className="w-full flex flex-col gap-3 mb-10" key={post?._id}>
+          <div className="w-full flex flex-col gap-3 " key={post?._id}>
             <Link
               href={`/blogs/${post?._id}`}
               className="flex w-full  max-h-[500px] items-start relative"

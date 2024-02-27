@@ -29,7 +29,6 @@ const HomePost: React.FC<HomePostProps> = ({ recentPost = false }) => {
       return await getAllPost({ ...Object.fromEntries(searchParams) });
     },
     queryKey: "Posts",
-    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

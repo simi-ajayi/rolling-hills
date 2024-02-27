@@ -55,21 +55,21 @@ const PostLayout: React.FC<PostLayoutProps> = ({
     );
   }
   return (
-    <div className="w-full max-md:gap-[4rem] gap-[2rem]  min-h-[60vh] flex flex-col-reverse lg:flex-row mb-[2rem] ">
+    <div className="w-full max-md:gap-[4rem] gap-[2rem]  min-h-[60vh] flex flex-col-reverse xl:flex-row mb-[2rem] ">
       <div className=" w-full flex-[1.2] border-r-gray-100 lg:border-r lg:pr-[3rem] flex flex-col gap-[5rem]">
         {recentPost && <MostRecentPost />}
 
-        <div className=" lg:hidden flex w-full">
+        <div className=" xl:hidden flex w-full">
           <TrendingPost />
         </div>
-        <LatestPost posts={posts} />
-        <div className=" lg:hidden flex w-full">
+        {!isLoading && <LatestPost posts={posts} />}
+        <div className=" xl:hidden flex w-full">
           <DoYouKnow />
         </div>
 
         <div className="w-full z-10">{content}</div>
       </div>
-      <div className="lg:flex backdrop-blur-md flex-col gap-[4rem] flex-[.7] w-full hidden  ">
+      <div className="xl:flex backdrop-blur-md flex-col gap-[4rem] flex-[.7] w-full hidden  ">
         <TrendingPost />
         <DoYouKnow />
       </div>

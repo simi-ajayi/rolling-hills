@@ -50,7 +50,7 @@ const HomePost: React.FC<HomePostProps> = ({ recentPost = false }) => {
   return (
     <Layout>
       <div id="#" className="border" ref={scrollRef} />
-      <div className="mt-[6rem]  md:w-[85%] w-[90%]  mx-auto">
+      <div className="mt-[6rem] p-4 xl:w-[1304px] lg:w-[890px] md:w-[80%]  w-[90%]  mx-auto">
         <PostLayout
           isLoading={isLoading}
           posts={posts}

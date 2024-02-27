@@ -27,17 +27,17 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
   //   navigate.push(`/blogs/${post?._id}`);
   // };
   return (
-    <div className="w-full grid md:grid-cols-5 grid-cols-4  justify-between gap-5">
+    <div className="w-full grid grid-cols-[0.5fr,1fr]   gap-5">
       <Link
         href={`/blogs/${post?._id}`}
-        className=" col-span-2 md:h-[8.5rem] sm:h-[7rem] h-[6rem]"
+        className=" md:h-[8.5rem] sm:h-[7rem] h-[6rem]"
       >
         {post?.photo ? (
           <Image
             src={post?.photo.url}
             alt=""
             height={600}
-            width={350}
+            width={450}
             className=" object-cover rounded h-full"
             loading="lazy"
           />
@@ -48,8 +48,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
         // />
         null}
       </Link>
-      <div className=" flex flex-col gap-[0.34rem] md:col-span-3 col-span-2  w-full ">
-        <div className="flex  flex-col gap-1">
+      <div className=" flex flex-col gap-[0.34rem]   w-full ">
+        <div className="flex flex-col gap-1">
           {!trending && (
             <div className="flex flex-wrap sm:gap-2 gap-1 items-center">
               <p className="rounded-full  text-xs">{post?.category}</p>

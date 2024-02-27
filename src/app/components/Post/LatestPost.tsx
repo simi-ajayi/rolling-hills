@@ -16,8 +16,8 @@ const LatestPost: React.FC<LatestPostProps> = ({ posts }) => {
         <BiNews className=" text-zinc-500" />
       </div>
       <Divider />
-      <div className="flex gap-4 p-4">
-        {posts?.slice(0, 3).map((post) => (
+      <div className=" grid grid-cols-4 gap-4 p-4">
+        {posts?.slice(0, 4).map((post) => (
           <div key={post?._id} className=" flex-col gap-1 w-full">
             <Link
               href={`/blogs/${post?._id}`}

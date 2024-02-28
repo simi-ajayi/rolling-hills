@@ -52,6 +52,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
       if (data.success) {
         toast.success("Blog Edited Successfully");
         queryClient.refetchQueries("Post");
+        queryClient.refetchQueries("Posts");
       } else {
         toast("Error, Something went wrong");
       }
@@ -63,6 +64,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
     onSuccess: (data: any) => {
       if (data.success) {
         toast.success("Blog Deleted Successfully");
+        queryClient.refetchQueries("Posts");
         router.back();
       } else {
         toast("Error, Something went wrong");

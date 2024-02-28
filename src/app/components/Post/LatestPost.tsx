@@ -10,25 +10,24 @@ type LatestPostProps = {
 
 const LatestPost: React.FC<LatestPostProps> = ({ posts }) => {
   return (
-    <div className="  border  rounded relative h-  w-full z-10 bg-white">
-      <div className=" text-xl p-4 font-semibold   flex justify-between">
+    <div className="   rounded relative h-  w-full z-10 bg-white">
+      {/* <div className=" text-xl p-4 font-semibold   flex justify-between">
         Latest News
         <BiNews className=" text-zinc-500" />
-      </div>
-      <Divider />
-      <div className=" grid grid-cols-4 gap-4 p-4">
+      </div> */}
+      <div className=" grid grid-cols-1 sm:grid-cols-3 gap-4 p-4">
         {posts?.slice(0, 4).map((post) => (
-          <div key={post?._id} className=" flex-col gap-1 w-full">
+          <div key={post?._id} className=" flex-col gap-2 flex w-full">
             <Link
               href={`/blogs/${post?._id}`}
-              className=" flex  w-full  relative  md:min-h-[10rem] sm:min-h-[8rem] min-h-[7rem] "
+              className=" flex  w-full relative md:min-h-[12rem] min-h-[10rem]  "
             >
               {post?.photo ? (
                 <Image
                   src={post?.photo.url}
                   alt=""
                   fill
-                  className=" object-cover rounded h-full  w-full absolute"
+                  className=" object-cover h-full  w-full absolute"
                   loading="lazy"
                 />
               ) : // <img
@@ -38,7 +37,9 @@ const LatestPost: React.FC<LatestPostProps> = ({ posts }) => {
               // />
               null}
             </Link>
-            <p className=" truncate text-xl font-semibold">{post?.title}</p>
+
+            <p className=" font-semibold text-sm">{post?.category}</p>
+            <p className="text-xl font-semibold">{post?.title}</p>
           </div>
         ))}
       </div>

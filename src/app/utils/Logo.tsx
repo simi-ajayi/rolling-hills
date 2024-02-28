@@ -6,7 +6,7 @@ const Logo = ({ direction = "row" }: { direction?: "row" | "col" }) => {
     <div
       className={`  flex ${
         direction === "col" ? "flex-col" : "sm:flex-row flex-col"
-      }  gap-1 items-center sm:text-[1.4rem] text-[1.2rem] font-bold`}
+      }  gap-1 items-center sm:text-[1.6rem] text-[1.4rem] font-bold`}
     >
       <Image
         alt="rollinghills logo"

@@ -29,6 +29,7 @@ const HomePost: React.FC<HomePostProps> = ({ recentPost = false }) => {
       return await getAllPost({ ...Object.fromEntries(searchParams) });
     },
     queryKey: "Posts",
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -49,23 +50,25 @@ const HomePost: React.FC<HomePostProps> = ({ recentPost = false }) => {
   const pageNumber: number = data?.numOfPage;
   return (
     <Layout>
-      <div id="#" className="border" ref={scrollRef} />
-      <div className="mt-[6rem] p-4 xl:w-[1304px] lg:w-[890px] md:w-[80%]  w-[90%]  mx-auto">
-        <PostLayout
-          isLoading={isLoading}
-          posts={posts}
-          recentPost={recentPost}
-        />
+      <div id="#" className="" ref={scrollRef} />
+      <div className="w-full ">
+        <div className="mt-[6rem] layout-size mx-auto">
+          <PostLayout
+            isLoading={isLoading}
+            posts={posts}
+            recentPost={recentPost}
+          />
 
-        <div className="flex lg:w-[65%] w-full justify-center my-[3rem]">
-          <Stack spacing={2}>
-            <Pagination
-              count={pageNumber}
-              shape="rounded"
-              onChange={handlePagination}
-              page={Number(pageValue) ?? 1}
-            />
-          </Stack>
+          <div className="flex lg:w-[65%] w-full justify-center my-[3rem]">
+            <Stack spacing={2}>
+              <Pagination
+                count={pageNumber}
+                shape="rounded"
+                onChange={handlePagination}
+                page={Number(pageValue) ?? 1}
+              />
+            </Stack>
+          </div>
         </div>
       </div>
 

@@ -20,9 +20,7 @@ const MostRecentPost: React.FC<MostRecentPostProps> = () => {
     return <TopPostLoader />;
   }
   return (
-    <div className="hero-carousel z-10 relative">
-      <div className="lg:h-[70%] z-[-10] h-[60%] w-[50%]  absolute lg:bottom-12  -left-1/4 bg-transparent bg-[radial-gradient(#03055e2c_1px,#fff_1px)] bg-[size:20px_20px]"></div>
-
+    <div className="relative">
       <Carousel
         showThumbs={false}
         autoPlay
@@ -31,9 +29,10 @@ const MostRecentPost: React.FC<MostRecentPostProps> = () => {
         showArrows={false}
         showIndicators={false}
         showStatus={false}
+        className="carousel"
       >
         {posts?.map((post) => (
-          <div className="w-full flex flex-col gap-3 " key={post?._id}>
+          <div className="w-full flex flex-col gap-3 h-fit " key={post?._id}>
             <Link
               href={`/blogs/${post?._id}`}
               className="flex w-full  max-h-[500px] items-start relative"
@@ -42,7 +41,7 @@ const MostRecentPost: React.FC<MostRecentPostProps> = () => {
                 <Image
                   src={`${post?.photo.url}`}
                   height={500}
-                  width={700}
+                  width={600}
                   alt=""
                   className="rounded w-full max-h-[500px] object-cover"
                 />

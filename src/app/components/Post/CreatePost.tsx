@@ -7,7 +7,7 @@ import { categories } from "./PostLayout";
 import { FcPicture } from "react-icons/fc";
 import Button from "@/app/utils/Button";
 import { toast } from "react-hot-toast";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { createPost } from "@/api/post";
 import { useProfile } from "@/app/states/profile";
 import { useAuthModal } from "@/app/states/authModal";
@@ -32,6 +32,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   const { isAuthenticated } = useProfile();
   const { setOpen } = useAuthModal();
   const [previewOpen, setPreviewOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   const { profile } = useProfileData();
   const { mutate, isLoading } = useMutation({
@@ -39,6 +40,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     onSuccess: (data) => {
       if (data.success) {
         toast.success("Blog Create Successfully");
+        queryClient.refetchQueries("Posts");
         router.push(`/edit/${data.post._id}`);
       } else {
         toast("Error, Something went wrong");

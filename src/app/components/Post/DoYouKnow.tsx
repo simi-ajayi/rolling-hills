@@ -47,7 +47,7 @@ const DoYouKnow = () => {
       {/* <div className="h-full min-w-full bg-gradient-to-r from-indigo-700/20 via-indigo-500/30 to-blue-500/20  absolute -z-[10] blur-md opacity-40  "></div> */}
       <div className=" px-1 text-center text-white z-30 tracking-wide w-full h-full caption-top   -translate-y-3 ">
         {!data?.tips?.tipText
-          ? " Nigeria won her indepence in the year 1996, we were ruled by the colonial master"
+          ? " Nigeria gain her indepence in 1st October 1960, we were ruled by the colonial master"
           : data?.tips?.tipText}
       </div>
     </div>

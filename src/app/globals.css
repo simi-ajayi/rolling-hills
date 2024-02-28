@@ -109,3 +109,34 @@ body{
 .carousel .control-dots .dot {
   @apply  bg-transparent !important;
 } */
+
+.carousel {
+  max-width: 100%;
+}
+
+
+@media (min-width: 1300px) {
+  .carousel {
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .carousel {
+    max-width: 800px;
+  }
+}
+@media (min-width: 1600px) {
+  .carousel {
+    max-width: 100%;
+  }
+}
+
+.layout-size{
+  max-width: 90%;
+}
+@media (min-width: 2000px) {
+  .layout-size {
+    max-width: 1500px;
+  }
+}

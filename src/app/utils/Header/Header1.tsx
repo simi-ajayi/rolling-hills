@@ -75,6 +75,22 @@ const Header1: React.FC<Header1Props> = () => {
 
           <div>
             <ul className="flex items-center justify-evenly gap-5">
+              {isSearching && (
+                <li>
+                  <form
+                    onSubmit={handleBlogSearch}
+                    className=" flex items-center gap-1 sm:w-fit w-full  relative"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Search RollingHills"
+                      defaultValue={searchValue ?? ""}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className=" border placeholder:text-zinc-400 border-zinc-400 p-2   rounded outline-none w-full "
+                    />
+                  </form>
+                </li>
+              )}
               <li className="flex items-center justify-center">
                 <button onClick={() => setIsSearching((prev) => !prev)}>
                   <BiSearch size={24} />
@@ -117,22 +133,6 @@ const Header1: React.FC<Header1Props> = () => {
                     )}
                   </li>
                 </>
-              )}
-              {isSearching && (
-                <li>
-                  <form
-                    onSubmit={handleBlogSearch}
-                    className=" flex items-center gap-1 sm:w-fit w-full  relative"
-                  >
-                    <input
-                      type="text"
-                      placeholder="Search RollingHills"
-                      defaultValue={searchValue ?? ""}
-                      onChange={(e) => setSearch(e.target.value)}
-                      className=" border placeholder:text-zinc-400 border-zinc-400 p-2   rounded outline-none w-full "
-                    />
-                  </form>
-                </li>
               )}
 
               <Menu

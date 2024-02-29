@@ -128,7 +128,7 @@ body{
 }
 @media (min-width: 1600px) {
   .carousel {
-    max-width: 800px;
+    max-width: 900px;
   }
 }
 

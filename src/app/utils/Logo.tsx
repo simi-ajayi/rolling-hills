@@ -6,17 +6,12 @@ const Logo = ({ direction = "row" }: { direction?: "row" | "col" }) => {
     <div
       className={`  flex ${
         direction === "col" ? "flex-col" : "sm:flex-row flex-col"
-      }  gap-1 items-center sm:text-[1.6rem] text-[1.4rem] font-bold`}
+      }  gap-1 items-center font-bold`}
     >
-      <Image
-        alt="rollinghills logo"
-        src={"/rollinghills.png"}
-        height={50}
-        width={60}
-      />
-      <p className={direction === "col" ? "-mt-7 " : "max-sm:-mt-7"}>
-        Rolling<span className=" text-emerald-600">Hills</span>
-      </p>
+      <Image alt="rollinghills logo" src={"/logo.svg"} height={30} width={30} />
+      {/* <p className={direction === "col" ? "-mt-7 " : "max-sm:-mt-7"}>
+        Creative Ideation Hub
+      </p> */}
     </div>
   );
 };

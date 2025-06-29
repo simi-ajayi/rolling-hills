@@ -72,7 +72,6 @@ const Header1: React.FC<Header1Props> = () => {
               <Logo />
             </Link>
           </div>
-
           <div>
             <ul className="flex items-center justify-evenly gap-5">
               {isSearching && (

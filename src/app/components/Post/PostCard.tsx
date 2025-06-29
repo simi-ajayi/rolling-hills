@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import useProfileData from "@/hooks/useProfileData";
+import QuillViewer from "../Quill/QuillViewer";
 
 type PostCardProps = {
   post: Post;
@@ -74,10 +75,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
           >
             {post?.title}
           </Link>
-          {/* <p className="  text-neutral-600 md:block hidden  w-[95%] ">
-            
-            {post?.content.substring(0, 130).split("<p>")?.[1]}
-          </p> */}
+          <QuillViewer content={post?.content.substring(0, 130)} />
         </div>
 
         {!trending && (

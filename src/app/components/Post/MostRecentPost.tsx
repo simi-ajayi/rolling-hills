@@ -20,7 +20,7 @@ const MostRecentPost: React.FC<MostRecentPostProps> = () => {
     return <TopPostLoader />;
   }
   return (
-    <div className="relative">
+    <div className=" w-full border-b border-gray-300 pb-5 ">
       <Carousel
         showThumbs={false}
         autoPlay
@@ -49,7 +49,7 @@ const MostRecentPost: React.FC<MostRecentPostProps> = () => {
             </Link>
             <Link
               href={`/blogs/${post?._id}`}
-              className=" md:px-0 px-4 text-left hover:text-blue-600 lg:text-[3.5rem] md:text-[3rem] text-[2.3rem] font-bold lg:leading-[4rem] leading-[3rem] "
+              className=" md:px-0 px-4 text-center  hover:text-blue-600 lg:text-[3rem] md:text-[2.5rem] text-[2rem] font-bold lg:leading-[4rem] leading-[3rem] "
             >
               {post?.title}
             </Link>

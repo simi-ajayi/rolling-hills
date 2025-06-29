@@ -10,8 +10,8 @@ type BlogItemProps = {};
 
 const BlogItem: React.FC<BlogItemProps> = ({ params }: any) => {
   const id = params.id;
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: "Single-Post",
+  const { data, isLoading, isFetching, refetch } = useQuery({
+    queryKey: ["Single-Post", id],
     queryFn: async () => {
       return await getPost(id);
     },
@@ -19,16 +19,10 @@ const BlogItem: React.FC<BlogItemProps> = ({ params }: any) => {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [id, refetch]);
-
   const post: Post = data?.post;
 
   let content: any;
-  if (isLoading) {
+  if (isLoading || isFetching) {
     content = (
       <div className="mt-[6rem] lg:w-[60%] md:w-[75%] w-[90%] mx-auto  ">
         <SingleBlogLoader />
@@ -36,7 +30,7 @@ const BlogItem: React.FC<BlogItemProps> = ({ params }: any) => {
     );
   } else {
     content = (
-      <div className="mt-[6rem]  lg:w-[60%] md:w-[75%] w-full mx-auto px-3 ">
+      <div className="mt-[6rem] max-w-[1600px] mx-auto px-3 ">
         <SinglePost post={post} />
       </div>
     );

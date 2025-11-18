@@ -31,7 +31,7 @@ const DoYouKnow = () => {
         <div className=" h-full w-[80%] bg-indigo-400 rounded-t absolute -skew-x-12 left-0 z-[-1]" />
         <div className=" h-full w-[80%] bg-indigo-400 rounded-t absolute skew-x-12 right-0 z-[-1]" />
         <p className=" text-sm uppercase text-white text-center translate-y-3 left-[50%] flex items-center gap-2 justify-center ">
-          Do you know?
+          Did you know?
           <FcIdea size={25} className="" />
         </p>
       </div>
@@ -47,7 +47,7 @@ const DoYouKnow = () => {
       {/* <div className="h-full min-w-full bg-gradient-to-r from-indigo-700/20 via-indigo-500/30 to-blue-500/20  absolute -z-[10] blur-md opacity-40  "></div> */}
       <div className=" px-1 text-center text-white z-30 tracking-wide w-full h-full caption-top   -translate-y-3 ">
         {!data?.tips?.tipText
-          ? " Nigeria gain her indepence in 1st October 1960, we were ruled by the colonial master"
+          ? " Nigeria gained her indepence on 1st October, 1960 from our colonial masters"
           : data?.tips?.tipText}
       </div>
     </div>

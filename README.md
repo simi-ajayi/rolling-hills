@@ -6,7 +6,7 @@ Install project dependencies:
 npm install
 ```
 Create an .env file
-  add NEXT_PUBLIC_SERVER_URI = https://blog-backend-0vy4.onrender.com
+  add NEXT_PUBLIC_SERVER_URI = https://blog-backend-krmc.onrender.com
   
 Start the development server:
 ```bash

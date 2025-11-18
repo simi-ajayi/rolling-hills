@@ -2,7 +2,7 @@
 import Auth from "@/app/components/modal/Auth";
 import { useAuthModal } from "@/app/states/authModal";
 import { useProfile } from "@/app/states/profile";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PiBrain } from "react-icons/pi";
 import { IoIosPerson } from "react-icons/io";
 import Link from "next/link";
@@ -26,6 +26,7 @@ const Header1: React.FC<Header1Props> = () => {
   const { isOpen, setClose, setOpen } = useAuthModal();
   const { isAuthenticated, logoutUser } = useProfile();
   const { isLoading, profile } = useProfileData();
+  const [mounted, setMounted] = useState(false);
   const [openTip, setOpenTip] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [search, setSearch] = useState("");
@@ -43,6 +44,11 @@ const Header1: React.FC<Header1Props> = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // Fix hydration mismatch by ensuring client-side only rendering
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = () => {
     logoutUser();
@@ -98,7 +104,12 @@ const Header1: React.FC<Header1Props> = () => {
               <li className=" hover:underline cursor-pointer  hidden md:block">
                 <Wishbutton />
               </li>
-              {!isAuthenticated ? (
+              {!mounted ? (
+                // Render placeholder during SSR to match initial client render
+                <li>
+                  <div className="rounded-full bg-zinc-400 animate-pulse flex items-center justify-center h-[2.4rem] w-[2.4rem] text-white  text-[1.2rem] cursor-pointer" />
+                </li>
+              ) : !isAuthenticated ? (
                 <>
                   <li
                     className=" text-white px-3 py-2 text-center bg-theme-tertiary hover:bg-theme-primary rounded-md cursor-pointer "
@@ -127,7 +138,7 @@ const Header1: React.FC<Header1Props> = () => {
                         onClick={handleClick}
                         className="rounded-full bg-theme-tertiary flex items-center justify-center h-[2.4rem] w-[2.4rem] text-white  text-[1.2rem] cursor-pointer"
                       >
-                        {profile?.username.substring(0, 1)}
+                        {profile?.username?.substring(0, 1) || "U"}
                       </button>
                     )}
                   </li>

@@ -12,20 +12,40 @@ interface IProfile {
 
 export const useProfile = create<IProfile>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       isAuthenticated: false,
       token: "",
       id: "",
       setProfile: (token, id) => {
-        set({ isAuthenticated: true, token, id });
+        if (token && id) {
+          set({ isAuthenticated: true, token, id });
+        }
       },
       setAuthenticated: ({ value }: { value: boolean }) => {
-        set({ isAuthenticated: value });
+        // Only update if we have a token, otherwise keep current state
+        const currentState = get();
+        if (value || currentState.token) {
+          set({ isAuthenticated: value || !!currentState.token });
+        }
       },
       logoutUser: () => {
         set({ isAuthenticated: false, token: "", id: "" });
       },
     }),
-    { name: "auth_store" }
+    { 
+      name: "auth_store",
+      // Ensure token persistence works correctly
+      partialize: (state) => ({
+        token: state.token,
+        id: state.id,
+        isAuthenticated: !!state.token, // Set authenticated based on token presence
+      }),
+      // Rehydrate and set authenticated state based on token
+      onRehydrateStorage: () => (state) => {
+        if (state && state.token) {
+          state.isAuthenticated = true;
+        }
+      },
+    }
   )
 );

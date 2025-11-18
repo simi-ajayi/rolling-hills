@@ -15,24 +15,18 @@ type PostLayoutProps = {
 };
 
 export const categories = [
-  "Programming",
-  "Data Science",
-  "Technology",
-  "Self Improvement",
-  "Productivity",
-  "Writing",
-  "Relationship",
-  "Machine Learning",
   "Politics",
+  "Technology",
+  "Sports",
+  "Entertainment",
+  "Health",
+  "Business",
   "Science",
-  "Nature",
-  "Comedy",
-  "UI/UX",
-  "Music",
-  "Photography",
-  "Career Advice",
-  "Paranting",
-  "AI",
+  "Education",
+  "Lifestyle",
+  "World News",
+  "Opinion",
+  "Weather",
 ];
 
 const PostLayout: React.FC<PostLayoutProps> = ({

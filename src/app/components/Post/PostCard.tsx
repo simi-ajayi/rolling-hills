@@ -54,7 +54,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
   };
 
   // Check ownership - compare user ID from profile or from auth store
-  const { id: userId } = useProfile();
   const isOwner = 
     profile?._id === post?.author?._id || 
     profile?.id === post?.author?._id ||

@@ -18,38 +18,55 @@ const TrendingPost = () => {
 
   if (isLoading) {
     return (
-      <div className="border w-full rounded relative bg-white  ">
-        <div className=" h-full w-full absolute bg-zinc-300 animate-pulse z-[-1] rounded   -right-3 -bottom-3"></div>
-        <p className=" text-xl font-semibold mb-3 flex  p-4 gap-2 items-center justify-between w-full h-[3rem] bg-zinc-200 animate-pulse"></p>
-        <div className=" flex flex-col p-4 gap-3 w-full h-[400px] bg-zinc-300 animate-pulse"></div>
+      <div className="w-full rounded-2xl relative bg-white shadow-lg border border-gray-100 overflow-hidden">
+        <div className="h-full w-full absolute bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse z-[-1] rounded-2xl -right-2 -bottom-2"></div>
+        <div className="h-16 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse"></div>
+        <div className="flex flex-col p-6 gap-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex gap-4">
+              <div className="w-32 h-24 bg-gray-200 rounded-lg animate-pulse"></div>
+              <div className="flex-1 space-y-2">
+                <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
   return (
-    <div className="border rounded relative bg-white sm:min-w-[450px] w-full">
-      {/* <div className=" h-full w-full absolute opacity-50 bg-emerald-400 z-[-1] rounded   -right-3 -bottom-3"></div> */}
-      <p className=" text-xl font-semibold mb-3 flex p-4 gap-2 items-center justify-between w-full">
-        Trending News
-      </p>
+    <div className="w-full rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden sticky top-24">
+      <div className="bg-gradient-to-r from-theme-primary to-theme-tertiary p-4">
+        <div className="flex items-center gap-2">
+          <BiTrendingUp className="text-white" size={24} />
+          <h2 className="text-xl font-bold text-white">Trending News</h2>
+        </div>
+      </div>
       <Divider />
-      <div className=" flex flex-col p-4 gap-3">
+      <div className="flex flex-col p-4 gap-4">
         {posts?.map((post, key) => (
-          <div key={post?._id} className="grid grid-cols-2 gap-3">
-            <div>
+          <Link 
+            key={post?._id} 
+            href={`/blogs/${post?._id}`}
+            className="group grid grid-cols-[120px,1fr] gap-4 p-3 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-transparent hover:border-gray-200"
+          >
+            <div className="relative overflow-hidden rounded-lg aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200">
               <Image
                 src={post?.photo?.url}
                 alt={post?.title}
-                height={600}
-                width={450}
-                className=" md:min-h-[12rem] object-cover"
+                height={120}
+                width={120}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
             </div>
-            <Link href={`/blogs/${post?._id}`}>
-              <p className=" md:text-xl sm:text-lg  font-semibold hover:text-blue-600 cursor-pointer hover:underline">
-                {post?.title?.substring(0, 200)}
-              </p>
-            </Link>
-          </div>
+            <div className="flex flex-col justify-center">
+              <h3 className="text-sm md:text-base font-semibold text-gray-900 group-hover:text-theme-primary transition-colors line-clamp-3 leading-snug">
+                {post?.title?.substring(0, 100)}
+                {post?.title?.length > 100 && "..."}
+              </h3>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

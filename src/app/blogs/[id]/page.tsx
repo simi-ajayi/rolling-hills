@@ -24,13 +24,13 @@ const BlogItem: React.FC<BlogItemProps> = ({ params }: any) => {
   let content: any;
   if (isLoading || isFetching) {
     content = (
-      <div className="mt-[6rem] lg:w-[60%] md:w-[75%] w-[90%] mx-auto  ">
+      <div className="mt-24 lg:w-[60%] md:w-[75%] w-[90%] mx-auto">
         <SingleBlogLoader />
       </div>
     );
   } else {
     content = (
-      <div className="mt-[6rem] max-w-[1600px] mx-auto px-3 ">
+      <div className="mt-24 max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8 py-8">
         <SinglePost post={post} />
       </div>
     );

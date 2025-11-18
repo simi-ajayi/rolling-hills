@@ -1,15 +1,27 @@
 import axios from "axios";
 
 const url = `${process.env.NEXT_PUBLIC_SERVER_URI}/api/v1`;
-const auth: any =
-  typeof window !== "undefined" &&
-  JSON.parse(localStorage.getItem("auth_store") as string);
 
-const token: string = auth?.state?.token;
+// Helper function to get auth token
+const getAuthToken = (): string => {
+  if (typeof window === "undefined") return "";
+  try {
+    const authStore = localStorage.getItem("auth_store");
+    if (!authStore) return "";
+    const auth = JSON.parse(authStore);
+    return auth?.state?.token || "";
+  } catch (error) {
+    console.error("Error reading auth token:", error);
+    return "";
+  }
+};
 
-const headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
+const getHeaders = () => {
+  const token = getAuthToken();
+  return {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
 };
 
 export const getAllPost = async ({
@@ -36,7 +48,7 @@ export const getAllPost = async ({
 
 export const getOwnerPost = async () => {
   try {
-    const res = await axios.get(`${url}/get-my-post`, { headers });
+    const res = await axios.get(`${url}/get-my-post`, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
     return error?.response?.data;
@@ -44,7 +56,7 @@ export const getOwnerPost = async () => {
 };
 export const getTrendingPost = async () => {
   try {
-    const res = await axios.get(`${url}/trending`, { headers });
+    const res = await axios.get(`${url}/trending`, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
     // Endpoint might not exist in backend, return empty data
@@ -60,7 +72,7 @@ export const createPost = async (data: any) => {
     const res = await axios.post(
       `${url}/create-post`,
       { ...data },
-      { headers }
+      { headers: getHeaders() }
     );
     return res.data;
   } catch (error: any) {
@@ -72,7 +84,7 @@ export const editPost = async ({ id, data }: { id: string; data: any }) => {
     const res = await axios.put(
       `${url}/edit-my-post/${id}`,
       { ...data },
-      { headers }
+      { headers: getHeaders() }
     );
     return res.data;
   } catch (error: any) {
@@ -81,7 +93,7 @@ export const editPost = async ({ id, data }: { id: string; data: any }) => {
 };
 export const deletePost = async ({ id }: { id: string }) => {
   try {
-    const res = await axios.delete(`${url}/delete-my-post/${id}`, { headers });
+    const res = await axios.delete(`${url}/delete-my-post/${id}`, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
     return error?.response?.data;
@@ -98,7 +110,7 @@ export const getPost = async (id: string) => {
 };
 export const likePost = async ({ postId }: { postId: string }) => {
   try {
-    const res = await axios.put(`${url}/like-post`, { postId }, { headers });
+    const res = await axios.put(`${url}/like-post`, { postId }, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
     return error?.response?.data;
@@ -116,7 +128,7 @@ export const commentOnPost = async ({
     const res = await axios.put(
       `${url}/comment-post`,
       { postId, comment },
-      { headers }
+      { headers: getHeaders() }
     );
     return res.data;
   } catch (error: any) {
@@ -126,7 +138,7 @@ export const commentOnPost = async ({
 
 export const savePost = async ({ postId }: { postId: string }) => {
   try {
-    const res = await axios.put(`${url}/save-post`, { postId }, { headers });
+    const res = await axios.put(`${url}/save-post`, { postId }, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
     return error?.response?.data;
@@ -134,7 +146,7 @@ export const savePost = async ({ postId }: { postId: string }) => {
 };
 export const getSavedPost = async () => {
   try {
-    const res = await axios.get(`${url}/get-save-post`, { headers });
+    const res = await axios.get(`${url}/get-save-post`, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
     return error?.response?.data;
@@ -142,7 +154,7 @@ export const getSavedPost = async () => {
 };
 export const getTopPost = async () => {
   try {
-    const res = await axios.get(`${url}/top-post`, { headers });
+    const res = await axios.get(`${url}/top-post`, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
     // Endpoint might not exist in backend, return empty data

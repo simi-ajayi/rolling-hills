@@ -27,17 +27,33 @@ const Login: React.FC<LoginProps> = ({ setType, setClose }) => {
   const { mutate, isLoading } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
+      console.log("Login response:", data); // Debug log
       if (data.success) {
-        toast.success("Login Successful");
-        setProfile(data?.token, data?.id);
-        setClose();
-        if (typeof window !== "undefined") {
-          window.location.reload();
+        const token = data?.token || data?.data?.token;
+        const id = data?.id || data?.data?.id || data?.user?.id;
+        
+        if (token && id) {
+          toast.success("Login Successful");
+          setProfile(token, id);
+          setClose();
+          // Small delay to ensure state is saved before reload
+          setTimeout(() => {
+            if (typeof window !== "undefined") {
+              window.location.reload();
+            }
+          }, 100);
+        } else {
+          console.error("Missing token or id in response:", { token, id, data });
+          toast.error("Login failed: Missing authentication data");
         }
       } else {
         const msg = data.message || "Something went wrong";
         toast.error(msg);
       }
+    },
+    onError: (error: any) => {
+      console.error("Login error:", error);
+      toast.error(error?.response?.data?.message || "Login failed");
     },
   });
 

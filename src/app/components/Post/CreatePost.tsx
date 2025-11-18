@@ -79,7 +79,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       setOpen();
       return;
     }
-    if (!title || !content || !categories || !photo) {
+    if (!title || !content || !category || !photo) {
       toast.error("Enter all fields, and select a Blog photo");
       return;
     }
@@ -90,7 +90,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   };
 
   const handleShowPreview = () => {
-    if (!title || !content || !categories || !photo) {
+    if (!title || !content || !category || !photo) {
       toast.error("Enter all fields, and select a Blog photo");
       return;
     }
@@ -99,7 +99,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
 
   return (
     <div className="mt-[5rem]">
-      {profile?.role === "admin" ? (
+      {isAuthenticated ? (
         <>
           <Preview
             open={previewOpen}

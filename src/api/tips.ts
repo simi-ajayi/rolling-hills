@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = `${process.env.NEXT_PUBLIC_SERVER_URI}`;
+const url = `${process.env.NEXT_PUBLIC_SERVER_URI}/api/v1`;
 const auth: any =
   typeof window !== "undefined" &&
   JSON.parse(localStorage.getItem("auth_store") as string);
@@ -30,6 +30,10 @@ export const getTips = async () => {
     const res = await axios.get(`${url}/get-tips`, { headers });
     return res.data;
   } catch (error: any) {
-    return error?.response?.data;
+    // Endpoint might not exist in backend, return empty data
+    if (error?.response?.status === 404) {
+      return { success: true, tips: { tipText: "" } };
+    }
+    return error?.response?.data || { success: false, tips: { tipText: "" } };
   }
 };

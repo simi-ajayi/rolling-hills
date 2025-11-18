@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = `${process.env.NEXT_PUBLIC_SERVER_URI}`;
+const url = `${process.env.NEXT_PUBLIC_SERVER_URI}/api/v1`;
 
 const auth: any =
   typeof window !== "undefined" &&
@@ -18,6 +18,20 @@ export const getUser = async () => {
     const res = await axios.get(`${url}/profile`, { headers });
     return res.data;
   } catch (error: any) {
-    return new Error(error?.response?.data);
+    // If profile endpoint doesn't exist, try alternative endpoints
+    if (error?.response?.status === 404) {
+      try {
+        const res = await axios.get(`${url}/get-profile`, { headers });
+        return res.data;
+      } catch (err: any) {
+        try {
+          const res = await axios.get(`${url}/user`, { headers });
+          return res.data;
+        } catch (e: any) {
+          return { success: false, message: "Profile endpoint not found" };
+        }
+      }
+    }
+    return error?.response?.data || { success: false, message: "Failed to fetch profile" };
   }
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = `${process.env.NEXT_PUBLIC_SERVER_URI}`;
+const url = `${process.env.NEXT_PUBLIC_SERVER_URI}/api/v1`;
 
 export const login = async ({
   email,

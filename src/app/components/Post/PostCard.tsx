@@ -56,7 +56,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
   // Check ownership - compare user ID from profile or from auth store
   const isOwner = 
     profile?._id === post?.author?._id || 
-    profile?.id === post?.author?._id ||
     userId === post?.author?._id ||
     String(userId) === String(post?.author?._id);
   // const handleRouteToBlog = (e: React.MouseEvent<HTMLDivElement>) => {

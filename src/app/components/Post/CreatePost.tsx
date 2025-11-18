@@ -27,6 +27,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState("");
   const [category, setCategory] = useState("");
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const inputRef: React.MutableRefObject<null> = useRef(null);
   const { isAuthenticated } = useProfile();
@@ -35,6 +36,11 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   const queryClient = useQueryClient();
 
   const { profile } = useProfileData();
+
+  // Fix hydration mismatch by ensuring client-side only rendering
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const { mutate, isLoading } = useMutation({
     mutationFn: createPost,
     onSuccess: (data) => {
@@ -96,6 +102,17 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     }
     setPreviewOpen(true);
   };
+
+  // Show loading state during SSR and initial client render
+  if (!mounted) {
+    return (
+      <div className="mt-[5rem]">
+        <div className="w-full h-64 flex items-center justify-center">
+          <div className="animate-pulse text-gray-400">Loading...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-[5rem]">

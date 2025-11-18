@@ -171,7 +171,6 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
   const { id: userId } = useProfile();
   const isOwner = post && (
     profile?._id === post?.author?._id || 
-    profile?.id === post?.author?._id ||
     userId === post?.author?._id ||
     String(userId) === String(post?.author?._id)
   );

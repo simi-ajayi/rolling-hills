@@ -8,6 +8,11 @@ import Link from "next/link";
 import Image from "next/image";
 import useProfileData from "@/hooks/useProfileData";
 import QuillViewer from "../Quill/QuillViewer";
+import { useMutation, useQueryClient } from "react-query";
+import { deletePost } from "@/api/post";
+import { toast } from "react-hot-toast";
+import { PiTrash } from "react-icons/pi";
+import { useProfile } from "@/app/states/profile";
 
 type PostCardProps = {
   post: Post;
@@ -18,11 +23,43 @@ type PostCardProps = {
 const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
   const navigate = useRouter();
   const { profile } = useProfileData();
+  const { id: userId } = useProfile();
+  const queryClient = useQueryClient();
 
-  const handleRouteToEdit = (e: React.MouseEvent<HTMLDivElement>) => {
+  const { mutate: deleteMutation, isLoading: isDeleting } = useMutation({
+    mutationFn: deletePost,
+    onSuccess: (data: any) => {
+      if (data.success) {
+        toast.success("Post deleted successfully");
+        queryClient.refetchQueries("Posts");
+      } else {
+        toast.error(data.message || "Failed to delete post");
+      }
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message || "Failed to delete post");
+    },
+  });
+
+  const handleRouteToEdit = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
     e.stopPropagation();
     navigate.push(`/edit/${post?._id}`);
   };
+
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      deleteMutation({ id: post?._id });
+    }
+  };
+
+  // Check ownership - compare user ID from profile or from auth store
+  const { id: userId } = useProfile();
+  const isOwner = 
+    profile?._id === post?.author?._id || 
+    profile?.id === post?.author?._id ||
+    userId === post?.author?._id ||
+    String(userId) === String(post?.author?._id);
   // const handleRouteToBlog = (e: React.MouseEvent<HTMLDivElement>) => {
   //   e.stopPropagation();
   //   navigate.push(`/blogs/${post?._id}`);
@@ -59,12 +96,23 @@ const PostCard: React.FC<PostCardProps> = ({ post, publish, trending }) => {
                 {moment(post?.createdAt).fromNow()}
               </p>
 
-              {profile?._id === post?.author._id && (
-                <div
-                  onClick={(e) => handleRouteToEdit(e)}
-                  className=" cursor-pointer hover:text-theme-tertiary bg-blue-300 flex justify-center items-center p-1 rounded-full"
-                >
-                  <LiaEdit className="text-[1.2rem]" />
+              {isOwner && (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleRouteToEdit}
+                    className="cursor-pointer hover:text-theme-tertiary hover:bg-blue-400 bg-blue-300 flex justify-center items-center p-1.5 rounded-full transition-colors"
+                    title="Edit post"
+                  >
+                    <LiaEdit className="text-[1.2rem]" />
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    className="cursor-pointer hover:text-red-600 hover:bg-red-200 bg-red-100 flex justify-center items-center p-1.5 rounded-full transition-colors disabled:opacity-50"
+                    title="Delete post"
+                  >
+                    <PiTrash className="text-[1.2rem]" />
+                  </button>
                 </div>
               )}
             </div>

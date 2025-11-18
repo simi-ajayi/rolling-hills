@@ -94,7 +94,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
       setOpen();
       return;
     }
-    if (!title || !content || !categories || !photo) {
+    if (!title || !content || !category || !photo) {
       toast.error("Enter all fields, and select a Blog photo");
       return;
     }
@@ -110,7 +110,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
   };
 
   const handlePublishBlog = () => {
-    if (!title || !content || !categories || !photo) {
+    if (!title || !content || !category || !photo) {
       toast.error("Enter all fields, and select a Blog photo");
       return;
     }
@@ -160,17 +160,68 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
     category: category,
   };
   const handleShowPreview = () => {
-    if (!title || !content || !categories || !photo) {
+    if (!title || !content || !category || !photo) {
       toast.error("Enter all fields, and select a Blog photo");
       return;
     }
     setPreviewOpen(true);
   };
 
+  // Check if user is the author of the post
+  const { id: userId } = useProfile();
+  const isOwner = post && (
+    profile?._id === post?.author?._id || 
+    profile?.id === post?.author?._id ||
+    userId === post?.author?._id ||
+    String(userId) === String(post?.author?._id)
+  );
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Show loading state during SSR
+  if (!mounted) {
+    return (
+      <div className="mt-[5rem]">
+        <div className="w-full h-64 flex items-center justify-center">
+          <div className="animate-pulse text-gray-400">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Check authentication and ownership
+  if (!isAuthenticated) {
+    return (
+      <div className="mt-[5rem]">
+        <NotAuthorized />
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="mt-[5rem]">
+        <div className="w-full h-64 flex items-center justify-center">
+          <div className="text-gray-400">Post not found</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isOwner) {
+    return (
+      <div className="mt-[5rem]">
+        <NotAuthorized />
+      </div>
+    );
+  }
+
   return (
     <div className="mt-[5rem]">
-      {profile?.role === "admin" ? (
-        <>
+      <>
           <Preview
             open={previewOpen}
             setClose={() => setPreviewOpen(false)}
@@ -303,10 +354,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
               </label>
             </div>
           </div>
-        </>
-      ) : (
-        <NotAuthorized />
-      )}
+      </>
     </div>
   );
 };

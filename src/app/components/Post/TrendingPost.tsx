@@ -7,6 +7,7 @@ import { getTrendingPost } from "@/api/post";
 import { Divider } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import DoYouKnow from "./DoYouKnow";
 
 const TrendingPost = () => {
   const { data, isLoading } = useQuery({
@@ -69,6 +70,8 @@ const TrendingPost = () => {
           </Link>
         ))}
       </div>
+          <DoYouKnow/>
+
     </div>
   );
 };

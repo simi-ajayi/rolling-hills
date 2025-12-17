@@ -1,17 +1,28 @@
-import { getTips } from "@/api/tips";
 import React from "react";
 import { FcIdea } from "react-icons/fc";
 import { useQuery } from "react-query";
 
+// Fetch random fact from third-party API
+const fetchRandomFact = async () => {
+  const response = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
+  if (!response.ok) {
+    throw new Error("Failed to fetch fact");
+  }
+  const data = await response.json();
+  return data;
+};
+
 const DoYouKnow = () => {
   const { data, isLoading, refetch } = useQuery({
-    queryKey: "tips",
-    queryFn: getTips,
+    queryKey: "random-fact",
+    queryFn: fetchRandomFact,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
   if (isLoading) {
     return (
-      <div className="relative z-30   w-full min-h-[100px] rounded-md flex flex-col items-center">
+      <div className="relative w-full min-h-[100px] rounded-md flex flex-col items-center">
         <div className="h-full min-w-full bg-zinc-200 animate-pulse  backdrop-blur-lg  absolute -z-20  rounded-md"></div>
 
         <div className="p-3 relative z-10  bg-zinc-200 -skew-x-12   rounded-lg w-[70%] -translate-y-5 flex justify-center">
@@ -23,7 +34,7 @@ const DoYouKnow = () => {
     );
   }
   return (
-    <div className="relative z-30     backdrop-blur-md   border-zinc-200  w-full min-h-[100px] rounded-md flex flex-col items-center">
+    <div className="relative z-30  mt-3   backdrop-blur-md   border-zinc-200  w-full min-h-[100px] rounded-md flex flex-col items-center">
       <div className="h-full min-w-full opacity-50 bg-emerald-400  absolute -z-20 left-2 -bottom-2 rounded-md"></div>
       <div className="h-full min-w-full bg-indigo-400  backdrop-blur-lg  absolute -z-20  rounded-md"></div>
 
@@ -46,9 +57,7 @@ const DoYouKnow = () => {
 
       {/* <div className="h-full min-w-full bg-gradient-to-r from-indigo-700/20 via-indigo-500/30 to-blue-500/20  absolute -z-[10] blur-md opacity-40  "></div> */}
       <div className=" px-1 text-center text-white z-30 tracking-wide w-full h-full caption-top   -translate-y-3 ">
-        {!data?.tips?.tipText
-          ? " Nigeria gained her indepence on 1st October, 1960 from our colonial masters"
-          : data?.tips?.tipText}
+        {data?.text || "Loading an interesting fact..."}
       </div>
     </div>
   );

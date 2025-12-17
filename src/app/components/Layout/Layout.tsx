@@ -12,7 +12,7 @@ const Layout: React.FC<layoutProps> = ({ children }) => {
     <>
       <Toaster position="top-center" />
       <Heading
-        title="Creative Ideation Hub"
+        title="Water Point"
         description="Discover stories, thinking, and expertise from writers on any topic."
         keywords="blog,stories,topic,technology,interest"
       />

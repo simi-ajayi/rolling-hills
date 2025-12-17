@@ -68,9 +68,9 @@ const PostLayout: React.FC<PostLayoutProps> = ({
 
           <div className="w-full z-10 ">{content}</div>
         </div>
-        <div className="xl:flex  flex-col gap-[4rem]  w-full hidden  ">
+        <div className="xl:flex  flex-col gap-[4rem] w-full hidden  ">
           <TrendingPost />
-          <DoYouKnow />
+          {/* <DoYouKnow /> */}
         </div>
       </div>
     </div>

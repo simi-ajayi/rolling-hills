@@ -54,27 +54,27 @@ export const getOwnerPost = async () => {
     return error?.response?.data;
   }
 };
-// export const getTrendingPost = async () => {
-//   try {
-//     const res = await axios.get(`${url}/get-trending-post`, { headers: getHeaders() });
-//     return res.data;
-//   } catch (error: any) {
-//     // Endpoint might not exist in backend, return empty data
-//     if (error?.response?.status === 404) {
-//       return { success: true, posts: [] };
-//     }
-//     return error?.response?.data || { success: false, posts: [] };
-//   }
-// };
-
-export const getTrendingPost = async (id: string) => {
+export const getTrendingPost = async () => {
   try {
-    const res = await axios.get(`${url}/get-trending-post`);
+    const res = await axios.get(`${url}/get-trending-post`, { headers: getHeaders() });
     return res.data;
   } catch (error: any) {
-    return error?.response?.data;
+    // Endpoint might not exist in backend, return empty data
+    if (error?.response?.status === 404) {
+      return { success: true, posts: [] };
+    }
+    return error?.response?.data || { success: false, posts: [] };
   }
 };
+
+// export const getTrendingPost = async (id: string) => {
+//   try {
+//     const res = await axios.get(`${url}/get-trending-post`);
+//     return res.data;
+//   } catch (error: any) {
+//     return error?.response?.data;
+//   }
+// };
 
 export const createPost = async (data: any) => {
   try {

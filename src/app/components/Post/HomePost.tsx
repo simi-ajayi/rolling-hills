@@ -41,7 +41,7 @@ const HomePost: React.FC<HomePostProps> = ({ recentPost = false }) => {
     value: number
   ) => {
     setPage(value);
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams ? searchParams.toString() : "");
     params.set("page", value.toString());
     router.replace(`${pathName}?${params}`);
   };
